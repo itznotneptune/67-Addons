@@ -2,7 +2,7 @@ import { @Vigilant, @SwitchProperty, @TextProperty, @CheckboxProperty, @ButtonPr
 
 @Vigilant("67-Addons", "§d§l67-Addons", {
   getCategoryComparator: () => (a, b) => {
-    const categories = ["General","Dungeons","Commands","F/M 4"]
+    const categories = ["General","Dungeons","Commands","Blood Room","F/M 4"]
     return categories.indexOf(a.name) - categories.indexOf(b.name);
   }
 })
@@ -235,6 +235,18 @@ class Settings {
     subcategory: "Commands"
   })
   dungeonCmd = false
+
+//  ////////////////////////////||\\\\\\\\\\\\\\\\\\\\\\\\\\\\  \\
+//                          Blood Stuff                         \\
+//  \\\\\\\\\\\\\\\\\\\\\\\\\\\\||////////////////////////////  \\
+
+  @SwitchProperty({
+    name: "Blood Done Alert",
+    description: "Sends a message when Blood Done is completed",
+    category: "Blood Room",
+    subcategory: "General"
+  })
+  bloodDone = false
 
 /*
 

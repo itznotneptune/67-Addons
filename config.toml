@@ -28,17 +28,17 @@
 		hide_player_after_leap = false
 		auto_swap_reaper = true
 		explo_shot_message = true
-		score_milestones = false
+		score_milestones = true
 		rapid_fire_message = true
-		core_timestamps = false
+		core_timestamps = true
 		announce_leap = true
 		leap_announce = true
 		reaper_armor_slots = 0
 		show_on_every_class = false
 		blood_rush_splits = false
 		force_paul = false
-		leap_message = false
-		announce_crypts = false
+		leap_message = true
+		announce_crypts = true
 
 	[dungeons.f7]
 		crystal_message = false
@@ -65,9 +65,14 @@
 	[dungeons.relics]
 		relic_triggerbot = false
 		block_wrong_relic_clicks = false
-		show_highlight_through_blocks = false
-		highlight_correct_cauldron = false
+		show_highlight_through_blocks = true
+		highlight_correct_cauldron = true
 		send_relic = false
+
+[blood_room]
+
+	[blood_room.general]
+		blood_done_alert = true
 
 ["f/m_4"]
 
@@ -96,7 +101,7 @@
 [commands]
 
 	[commands.commands]
-		party_chat_dungeon_queue_command = false
+		party_chat_dungeon_queue_command = true
 
 [dungeon]
 

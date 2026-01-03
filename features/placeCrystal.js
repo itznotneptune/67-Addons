@@ -53,7 +53,7 @@ register("chat", () => {
 }).setCriteria(/^(\S+) picked up an Energy Crystal!$/)
 
 register("chat", () => {
-    if (Settings.placeCrystalAlert) return
+    if (!Settings.placeCrystalAlert) return
     haveCrystal = false
     placedCrystal = true
     clearCrystal()

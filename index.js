@@ -19,6 +19,8 @@ import "./features/placeCrystal"
 // import "./features/deathTickTimer"
 // import "./m4Features/mobDisplay"
 // import "./m4Features/m4Render"
+import "./features/termCounter"
+import "./features/bloodDone"
 
 // restore simple command for opening GUI
 register("command", (...args) => {
