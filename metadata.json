@@ -1,8 +1,8 @@
 {
     "name": "67-Addons",
-    "creator": "Mage677, owo67",
+    "creator": "Mage677",
     "description": "67-Addons is very sigma indeed",
-    "version": "0.6.7",
+    "version": "0.6.8",
     "entry": "index.js",
     "requires": ["Vigilance", "BloomCore", "FontLib", "PogData"]
   }
