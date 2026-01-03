@@ -70,9 +70,21 @@
 		send_relic = false
 
 [blood_room]
+	"&4disable_boss_messages" = false
+	global_toggle = true
 
 	[blood_room.general]
-		blood_done_alert = true
+		blood_done_alert = false
+
+	[blood_room.notifications]
+		easy_mode_kill_notif = false
+		watcher_dialogue_notif = true
+
+	[blood_room.camp]
+		watcher_chat_info = true
+		camp_info = true
+		watcher_chat_info_style = 2
+		hide_camp_in_boss = false
 
 ["f/m_4"]
 

@@ -1,0 +1,26 @@
+
+[watcher]
+
+	[watcher.notifications]
+		baby_mode_kill_notif = false
+		easy_mode_kill_notif = true
+		watcher_dialogue_notif = true
+
+	[watcher.camp]
+		baby_mode_kill_notif = false
+		watcher_chat_info = false
+		camp_info = true
+		watcher_dialogue_notif = true
+		watcher_chat_info_style = 0
+		hide_camp_in_boss = true
+
+[general]
+	"&4disable_boss_messages" = false
+	global_toggle = true
+	"&4&ldisable_boss_messages" = false
+
+[livid]
+
+	[livid.timer]
+		livid_vuln_timer = true
+

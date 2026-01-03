@@ -21,6 +21,8 @@ import "./features/placeCrystal"
 // import "./m4Features/m4Render"
 import "./features/termCounter"
 import "./features/bloodDone"
+import "./watcher/settings"
+import "./watcher/index"
 
 // restore simple command for opening GUI
 register("command", (...args) => {
