@@ -1,0 +1,72 @@
+// Backup of original index.js
+// Temporary import bisect runner — imports features one-by-one and logs Settings state.
+import Settings from "./config"
+
+var features = [
+    "./features/BloodRushSplit",
+    "./features/QueueDungeonCommand",
+    "./features/RelicUtils",
+    "./features/Relic",
+    "./features/AutoRefill",
+    "./features/ScoreMessage",
+    "./features/Crypt",
+    "./features/CoreMessage",
+    "./features/rag",
+    "./features/leapMsg",
+    "./features/placeCrystal",
+    "./m4Features/mobDisplay",
+    "./m4Features/m4Render",
+    "./util/util",
+]
+
+function serializeSettings() {
+    var out = {}
+    for (var k in Settings) {
+        if (!Settings.hasOwnProperty(k)) continue
+        try { if (typeof Settings[k] !== 'function') out[k] = Settings[k] } catch (e) {}
+    }
+    return JSON.stringify(out)
+}
+
+function log(msg) {
+    try {
+        if (typeof FileLib !== 'undefined' && FileLib.write) FileLib.write("67-Addons", "import_debug.log", msg + "\n", true)
+    } catch (e) {}
+    try { console.log("[67-Addons] " + msg) } catch (e) {}
+}
+
+log("before-import: " + serializeSettings())
+for (var i = 0; i < features.length; i++) {
+    var f = features[i]
+    try {
+        require(f)
+    } catch (e) {
+        log("import error " + f + ": " + e)
+    }
+    log("after-import " + f + ": " + serializeSettings())
+}
+
+// restore simple command for opening GUI
+register("command", (...args) => {
+    Settings.openGUI()
+}).setName("67").setAliases("67addons", "67-addons", "67addon");
+
+// Additional explicit `/67save` command (no args) to persist current settings
+register("command", () => {
+    try {
+        if (typeof Settings.save === 'function') {
+            Settings.save()
+        } else if (typeof FileLib !== 'undefined' && FileLib.write) {
+            var toSave = {}
+            for (var k in Settings) {
+                if (Settings.hasOwnProperty(k) && typeof Settings[k] !== 'function') toSave[k] = Settings[k]
+            }
+            FileLib.write("67-Addons", "settings.json", JSON.stringify(toSave, null, 2))
+            try { ChatLib.chat("[67-Addons] settings saved") } catch (e) {}
+        } else {
+            try { ChatLib.chat("[67-Addons] no save available") } catch (e) {}
+        }
+    } catch (e) { try { ChatLib.chat("[67-Addons] save failed: " + e) } catch (e) {} }
+}).setName("67save");
+
+log("import-bisect-complete")

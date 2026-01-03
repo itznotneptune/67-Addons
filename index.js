@@ -1,4 +1,5 @@
-//Importing features
+import Settings from "./configs";
+
 import "./features/BloodRushSplit"
 import "./features/QueueDungeonCommand"
 // import "./features/RapidFire"
@@ -18,7 +19,8 @@ import "./features/placeCrystal"
 // import "./features/deathTickTimer"
 // import "./m4Features/mobDisplay"
 // import "./m4Features/m4Render"
-//Importing gui
-import Settings from "./config";
-//gui command
-register("command", function() { Settings.openGUI(); }).setName("67");
+
+// restore simple command for opening GUI
+register("command", (...args) => {
+    Settings.openGUI()
+}).setName("67").setAliases("67addons", "67-addons", "67addon");

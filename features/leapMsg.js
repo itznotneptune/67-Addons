@@ -1,4 +1,4 @@
-import config from "../config"
+import Settings from "../configs"
 
 let LEAP_DEBUG = false
 const D_PREFIX = "§6[leapDbg] §r"
@@ -81,8 +81,8 @@ function extractTextFromEvent(event) {
 
 function isLeapEnabled() {
   // some configs use LeapMsg (capital L) while code used leapMsg
-  if (typeof config.leapMsg !== 'undefined') return !config.leapMsg
-  if (typeof config.LeapMsg !== 'undefined') return !config.LeapMsg
+  if (typeof Settings.leapMsg !== 'undefined') return !Settings.leapMsg
+  if (typeof Settings.LeapMsg !== 'undefined') return !Settings.LeapMsg
   return false
 }
 
@@ -103,8 +103,8 @@ register("chat", (event) => {
 
 // Detect party leap messages with a heart icon: e.g. "Party > ...: ❤ owo67"
 register("chat", (event) => {
-  if (LEAP_DEBUG) ChatLib.chat(D_PREFIX + "config.leapMsg: " + !config.leapMsg)
-  if (config.leapMsg) return
+  if (LEAP_DEBUG) ChatLib.chat(D_PREFIX + "Settings.leapMsg: " + !Settings.leapMsg)
+  if (Settings.leapMsg) return
 
   try {
     let raw = extractTextFromEvent(event)
@@ -146,8 +146,8 @@ register("chat", (event) => {
 
 // Also detect the teleport confirmation line: "You have teleported to NAME!" and trigger the leap flow
 register("chat", (event) => {
-  if (LEAP_DEBUG) ChatLib.chat(D_PREFIX + "config.leapMsg: " + !config.leapMsg)
-  if (config.leapMsg) return
+  if (LEAP_DEBUG) ChatLib.chat(D_PREFIX + "Settings.leapMsg: " + !Settings.leapMsg)
+  if (Settings.leapMsg) return
   try {
     let raw = extractTextFromEvent(event)
     if (!raw) return
@@ -216,8 +216,8 @@ function resolveClass(name) {
 }
 
 register("chat", (name) => {
-  if (LEAP_DEBUG) ChatLib.chat(D_PREFIX + "config.leapMsg: " + !config.leapMsg)
-  if (config.leapMsg) return
+  if (LEAP_DEBUG) ChatLib.chat(D_PREFIX + "Settings.leapMsg: " + !Settings.leapMsg)
+  if (Settings.leapMsg) return
 
   const clean = ChatLib.removeFormatting(name)
 
@@ -255,7 +255,7 @@ register("command", () => {
   }
 }).setName("leapdebug", true)
 
-// import config from "../config"
+// import Settings from "../config"
 
 // const classCache = {}
 
@@ -290,7 +290,7 @@ register("command", () => {
 // }
 
 // register("chat", (name) => {
-//   if (config.leapMsg) return
+//   if (Settings.leapMsg) return
 
 //   const clean = ChatLib.removeFormatting(name)
 

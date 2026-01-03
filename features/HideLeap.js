@@ -1,4 +1,4 @@
-import config from "../config"
+import Settings from "../config"
 import { prefix } from "../util/util"
 import { registerWhen } from "../../BloomCore/utils/Utils"
 
@@ -22,7 +22,7 @@ register("chat", () => {
 }).setCriteria("[BOSS] Maxor: WELL! WELL! WELL! LOOK WHO'S HERE!")
 
 registerWhen(register("chat", () => {
-    if (config.onlyHideInBoss) {
+    if (Settings.onlyHideInBoss) {
         if (inBoss) {
             hidePlayers()
             setTimeout(() => {
@@ -35,7 +35,7 @@ registerWhen(register("chat", () => {
             showPlayers()
         }, 2000)
     }
-}).setCriteria(/You have teleported to .+/), () => config.hidePlayersAfterLeap)
+}).setCriteria(/You have teleported to .+/), () => Settings.hidePlayersAfterLeap)
 
 registerWhen(register("renderEntity", (entity, pos, pt, event) => {
     if (entity.getEntity() instanceof EntityPlayer) {

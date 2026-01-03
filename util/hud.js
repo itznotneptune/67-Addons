@@ -1,5 +1,5 @@
 registerWhen(register('renderOverlay', () => {
-	if (config.crystalHUD) {
+	if (Settings.crystalHUD) {
 		drawStringWithShadow(
 			`§cPlace Crystal!`,
 			data.crystalCoords.x,
@@ -8,4 +8,4 @@ registerWhen(register('renderOverlay', () => {
 	}
 
 
-}), () => config.crystalHUD)
+}), () => Settings.crystalHUD)

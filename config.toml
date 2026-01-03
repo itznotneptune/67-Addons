@@ -6,7 +6,7 @@
 		announce_slayer = true
 		player_size = true
 		auto_equip_mask = false
-		rag_axe_message = true
+		rag_axe_message = false
 
 	[general.auto_refill]
 		auto_refill_pearls_threshold = 8
@@ -24,25 +24,25 @@
 	blood_rush_split = true
 
 	[dungeons.general]
-		only_hide_in_boss = true
-		hide_player_after_leap = true
+		only_hide_in_boss = false
+		hide_player_after_leap = false
 		auto_swap_reaper = true
-		explo_shot_message = true
-		score_milestones = true
-		rapid_fire_message = true
-		core_timestamps = true
+		explo_shot_message = false
+		score_milestones = false
+		rapid_fire_message = false
+		core_timestamps = false
 		announce_leap = true
 		leap_announce = true
 		reaper_armor_slots = 0
 		show_on_every_class = false
 		blood_rush_splits = false
-		force_paul = true
-		leap_message = true
-		announce_crypts = true
+		force_paul = false
+		leap_message = false
+		announce_crypts = false
 
 	[dungeons.f7]
 		crystal_message = false
-		crystal_alert = true
+		crystal_alert = false
 
 	[dungeons.p5]
 		dragon_debuff_message = false
@@ -59,42 +59,44 @@
 		announce_crypt_reminder = false
 
 	[dungeons.blood_rush]
-		show_on_every_class = true
+		show_on_every_class = false
 		blood_rush_splits = true
 
 	[dungeons.relics]
 		relic_triggerbot = false
-		block_wrong_relic_clicks = true
-		show_highlight_through_blocks = true
-		highlight_correct_cauldron = true
+		block_wrong_relic_clicks = false
+		show_highlight_through_blocks = false
+		highlight_correct_cauldron = false
 		send_relic = false
 
 ["f/m_4"]
 
 	["f/m_4".general]
-		m4_mob_render = true
-		m4_mobs_display = true
+		m4_mob_render = false
+		m4_mobs_amount_display = false
+		m4_mobs_display = false
 
 	["f/m_4".animals_render]
-		cow_render = true
-		sheep_render = true
-		wolf_render = true
-		chicken_render = true
-		rabbit_render = true
-		bat_render = true
+		m4_mob_render = false
+		cow_render = false
+		sheep_render = false
+		wolf_render = false
+		chicken_render = false
+		rabbit_render = false
+		bat_render = false
 
 	["f/m_4".genereal]
 		m4_mobs_display = true
 
 	["f/m_4".render]
-		render_animals = true
-		render_waypoints = true
-		render_rail = true
+		render_animals = false
+		render_waypoints = false
+		render_rail = false
 
 [commands]
 
 	[commands.commands]
-		party_chat_dungeon_queue_command = true
+		party_chat_dungeon_queue_command = false
 
 [dungeon]
 

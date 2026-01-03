@@ -1,6 +1,6 @@
 // --------------------------------- Imports --------------------------------- \\
 
-import config from "../config.js"
+import Settings from "../configs.js"
 
 // ---------------------------------  Variables --------------------------------- \\
 
@@ -20,9 +20,6 @@ const thornRail = [
 ];
 
 let inM4 = false;
-let m4RenderWaypoints = config.m4RenderWaypoints;
-let m4RenderRail = config.m4RenderRail;
-let m4RenderAnimals = config.m4RenderAnimals;
 
 // --------------------------------- Debug Commands --------------------------------- \\
 
@@ -44,46 +41,46 @@ animalList = [
 
 // --------------------------------- Render Toggles --------------------------------- \\
 
-let bat = config.batRender;
-let chicken = config.chickenRender;
-let rabbit = config.rabbitRender;
-let sheep = config.sheepRender;
-let wolf = config.wolfRender;
-let cow = config.cowRender;
-
 function animalToggled(name) {
   switch (name) {
-    case "EntityBat": return bat;
-    case "EntityChicken": return chicken;
-    case "EntityRabbit": return rabbit;
-    case "EntitySheep": return sheep;
-    case "EntityWolf": return wolf;
-    case "EntityCow": return cow;
+    case "EntityBat": return Settings.batRender;
+    case "EntityChicken": return Settings.chickenRender;
+    case "EntityRabbit": return Settings.rabbitRender;
+    case "EntitySheep": return Settings.sheepRender;
+    case "EntityWolf": return Settings.wolfRender;
+    case "EntityCow": return Settings.cowRender;
   }
   return false;
 }
 
+console.log(`Cow Render: ${Settings.cowRender}`);
+
+register("command", () => {
+  console.log(`Cow Render: ${Settings.cowRender}`);
+  console.log(`Settings Cow Render: ${Settings.cowRender}`);
+}).setName("cow")
+
 // --------------------------------- Registers --------------------------------- \\
 
-register("tick", () => {
-    inM4 = false;
-    Scoreboard.getLines().forEach(l => {
-        let n = l.getName().replace(/§[0-9A-FK-OR]/gi, "")
-        if( n.includes("The Cat") && (n.includes("M4") || n.includes("F4"))) { inM4 = true }
-    }
-)});
+// register("tick", () => {
+//     inM4 = false;
+//     Scoreboard.getLines().forEach(l => {
+//         let n = l.getName().replace(/§[0-9A-FK-OR]/gi, "")
+//         if( n.includes("The Cat") && (n.includes("M4") || n.includes("F4"))) { inM4 = true }
+//     }
+// )});
 
 register("renderWorld", () => {
-    if((!inM4 && config.m4Render) || Player.getZ() < -40) {return};
-    if (m4RenderWaypoints) {
+    if((!inM4 && Settings.m4Render) || Player.getZ() < -40) {return};
+    if (Settings.m4RenderWaypoints) {
         drawBox(5.5,  69.0, 4.5,  /**/ 1, 0, 1, /**/ 0.0, 0.0, 0.0, 1.0); // bow (flat)
         drawBox(27.5, 81.5, 18.5, /**/ 1, 0, 1, /**/ 0.0, 0.0, 0.0, 1.0); // shoot
         drawBox(-4.5, 83.5, 27.5, /**/ 1, 0, 1, /**/ 0.0, 0.0, 0.0, 1.0); // backstun
     }
 
-    if (m4RenderRail) {drawThornRail(0.0, 0.0, 0.0, 1.0)}
+    if (Settings.m4RenderRail) {drawThornRail(0.0, 0.0, 0.0, 1.0)}
 
-    if(m4RenderAnimals) { animalList.forEach(([cls,w,h,d,r,g,b,a]) => {
+    if(Settings.m4RenderAnimals) { animalList.forEach(([cls,w,h,d,r,g,b,a]) => {
     if(animalToggled(cls)) {
       World.getAllEntities().filter(e => e.getClassName()===cls).forEach(e => {
         drawBox(e.getX(), e.getY(), e.getZ(), w,h,d,r,g,b,a);

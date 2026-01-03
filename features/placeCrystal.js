@@ -1,6 +1,6 @@
 // --------------------------------- Imports --------------------------------- \\
 
-import config from "../config"
+import Settings from "../configs"
 
 // --------------------------------- Variables --------------------------------- \\
 
@@ -36,7 +36,7 @@ function findCrystalHotbarSlot() {
 // --------------------------------- Detection for Crystal Pickup / Placement --------------------------------- \\
 
 register("chat", () => {
-    if (config.placeCrystalAlert) return
+    if (!Settings.placeCrystalAlert) return
     // wait a moment for inventory update, then check hotbar slots for a crystal
     setTimeout(() => {
         const slot = findCrystalHotbarSlot()
@@ -46,24 +46,24 @@ register("chat", () => {
         placedCrystal = false
         // show persistent instruction until a "placed" message appears
         displayCrystal(`§e§l⚠ §b§lPlace Crystal §e§l⚠`, 0)
-        if (config.placeCrystalAlertChat){
+        if (Settings.placeCrystalAlertChat){
             ChatLib.command(`pc Crystal picked up`)
         }
     }, 50)
 }).setCriteria(/^(\S+) picked up an Energy Crystal!$/)
 
 register("chat", () => {
-    if (config.placeCrystalAlert) return
+    if (Settings.placeCrystalAlert) return
     haveCrystal = false
     placedCrystal = true
     clearCrystal()
-    if (config.placeCrystalAlertChat){
+    if (Settings.placeCrystalAlertChat){
         ChatLib.command(`pc Crystal placed`)
     }
 }).setCriteria((/^(\S+) Energy Crystals are now active!$/))
 
 register("command", () => {
-    if (config.placeCrystalAlert) return
+    if (!Settings.placeCrystalAlert) return
     // wait a moment for inventory update, then check hotbar slots for a crystal
     setTimeout(() => {
         const slot = findCrystalHotbarSlot()
@@ -74,24 +74,24 @@ register("command", () => {
         // show persistent instruction until a "placed" message appears
         displayCrystal(`§e§l⚠ §b§lPlace Crystal §e§l⚠`, 0)
         ChatLib.chat(`Crystal picked up (slot ${slot + 1})`)
-        if (config.placeCrystalAlertChat){
-            ChatLib.chat(`Alert chat is ${config.placeCrystalAlertChat}`)
+        if (Settings.placeCrystalAlertChat){
+            ChatLib.chat(`Alert chat is true`)
         } else {
-            ChatLib.chat(`Alert chat is ${config.placeCrystalAlertChat}`)
+            ChatLib.chat(`Alert chat is false`)
         }
     }, 50)
 }).setName("pickCrystal")
 
 register("command", () => {
-    if (config.placeCrystalAlert) return
+    if (!Settings.placeCrystalAlert) return
     haveCrystal = false
     placedCrystal = true
     clearCrystal()
     ChatLib.chat(`Crystal title cleared`)
-    if (config.placeCrystalAlertChat){
-        ChatLib.chat(`Alert chat is ${config.placeCrystalAlertChat}`)
+    if (Settings.placeCrystalAlertChat){
+        ChatLib.chat(`Alert chat is true`)
     } else {
-        ChatLib.chat(`Alert chat is ${config.placeCrystalAlertChat}`)
+        ChatLib.chat(`Alert chat is false`)
     }
 }).setName("clearcrystal")
 

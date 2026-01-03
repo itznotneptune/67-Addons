@@ -1,4 +1,4 @@
-import config from '../config'
+import Settings from '../config'
 import { registerWhen } from "../../BloomCore/utils/Utils"
 
 let text = new Text('').setScale(2).setShadow(true).setAlign('CENTER').setColor(Renderer.YELLOW)
@@ -14,7 +14,7 @@ registerWhen(register("chat", (n, a, p) => {
     place = p
     startTime = Date.now()
     timesPlayed = 0
-}).setCriteria(/Party >.* (\w+): (At|Inside) (.+)(!)?/), () => config.locationNotif)
+}).setCriteria(/Party >.* (\w+): (At|Inside) (.+)(!)?/), () => Settings.locationNotif)
 
 registerWhen(register("renderOverlay", () => {
     const remaining = (1500 - (Date.now() - startTime ?? 0))
@@ -23,13 +23,13 @@ registerWhen(register("renderOverlay", () => {
     text.setString(`${name} is ${action} ${place}!`)
     text.draw(Renderer.screen.getWidth() / 2, Renderer.screen.getHeight() / 2 - 50)
 
-    let timesToPlay = parseInt(config.locationNotifRepeatAmount)
+    let timesToPlay = parseInt(Settings.locationNotifRepeatAmount)
     if (timesPlayed < timesToPlay) {
-        World.playSound(config.locationSound, 2, 2)
+        World.playSound(Settings.locationSound, 2, 2)
         timesPlayed++
     }
 
-}), () => config.locationNotif && startTime && name != Player.getName())
+}), () => Settings.locationNotif && startTime && name != Player.getName())
 
 const inRange = (arr) => {
     let x = Player.getX()
@@ -98,49 +98,49 @@ register('chat', () => {
 }).setCriteria("[BOSS] Necron: You went further than any human before, congratulations.")
 
 register('tick', () => {
-    if (!messagesSent.ssMessage[0] && config.ssCoord && inRange(messagesSent.ssMessage)) {
+    if (!messagesSent.ssMessage[0] && Settings.ssCoord && inRange(messagesSent.ssMessage)) {
         ChatLib.command('pc At SS!')
         messagesSent.ssMessage[0] = true
         return
     }
 
-    if (!messagesSent.pre2[0] && config.pre2Coord && inRange(messagesSent.pre2)) {
+    if (!messagesSent.pre2[0] && Settings.pre2Coord && inRange(messagesSent.pre2)) {
         ChatLib.command('pc At Pre Enter 2!')
         messagesSent.pre2[0] = true
         return
     }
 
-    if (!messagesSent.pre3[0] && config.pre3Coord && (inRange(messagesSent.pre3) || inRange(messagesSent.lowerpre3))) {
+    if (!messagesSent.pre3[0] && Settings.pre3Coord && (inRange(messagesSent.pre3) || inRange(messagesSent.lowerpre3))) {
         ChatLib.command('pc At Pre Enter 3!')
         messagesSent.pre3[0] = messagesSent.lowerpre3[0] = true
         return
     }
 
-    if (!messagesSent.pre4[0] && config.pre4Coord && inRange(messagesSent.pre4)) {
+    if (!messagesSent.pre4[0] && Settings.pre4Coord && inRange(messagesSent.pre4)) {
         ChatLib.command('pc At Pre Enter 4!')
         messagesSent.pre4[0] = true
         return
     }
 
-    if (!messagesSent.slingshot[0] && config.slingshotCoord && inRange(messagesSent.slingshot)) {
+    if (!messagesSent.slingshot[0] && Settings.slingshotCoord && inRange(messagesSent.slingshot)) {
         ChatLib.command('pc At Core!')
         messagesSent.slingshot[0] = true
         return
     }
 
-    if (!messagesSent.tunnel[0] && config.tunnelCoord && inRange(messagesSent.tunnel)) {
+    if (!messagesSent.tunnel[0] && Settings.tunnelCoord && inRange(messagesSent.tunnel)) {
         ChatLib.command('pc Inside Goldor Tunnel!')
         messagesSent.tunnel[0] = true
         return
     }
     
-    if (!messagesSent.mid[0] && config.midCoord && inRadius(messagesSent.mid)) {
+    if (!messagesSent.mid[0] && Settings.midCoord && inRadius(messagesSent.mid)) {
         ChatLib.command('pc At Mid!')
         messagesSent.mid[0] = true
         return
     }
 
-    if (!messagesSent.safespot2[0] && config.safespotCoord && inRange(messagesSent.safespot2)) {
+    if (!messagesSent.safespot2[0] && Settings.safespotCoord && inRange(messagesSent.safespot2)) {
         ChatLib.command('pc At 2 Safespot!')
         messagesSent.safespot2[0] = true
         return

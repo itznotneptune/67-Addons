@@ -1,4 +1,4 @@
-import config from "../config";
+import Settings from "../config";
 import { Player, Inventory, register } from "../util/util"; // Adjust import if needed
 
 function equipMask(maskName) {
@@ -27,7 +27,7 @@ register("tick", () => {
 });
 
 register("chat", () => {
-    if (config.automask) {
+    if (Settings.automask) {
         if (!equipMask("Bonzo's Mask")) {
             equipMask("Spirit Mask");
         }

@@ -1,4 +1,4 @@
-import config from "../config"
+import Settings from "../configs"
 import { prefix, getRoom, getRoomID, getClass } from "../util/util"
 import { registerWhen } from "../../BloomCore/utils/Utils"
 import DmapDungeon from "../components/DmapDungeon"
@@ -14,15 +14,15 @@ registerWhen(register("chat", () => {
     runStarted = Date.now()
     roomTimes.push(0)
     inBr = true
-}).setCriteria("[NPC] Mort: Here, I found this map when I first entered the dungeon."), () => config.bloodRushSplits)
+}).setCriteria("[NPC] Mort: Here, I found this map when I first entered the dungeon."), () => Settings.bloodRushSplits)
 
 registerWhen(register("chat", () => {
-    if (config.showOnEveryClass && getClass() != "Archer" && getClass() != "Mage") return
+    if (Settings.showOnEveryClass && getClass() != "Archer" && getClass() != "Mage") return
     roomTimes.push(Date.now() - runStarted)
-}).setCriteria(/.+ opened a WITHER door!/), () => config.bloodRushSplits)
+}).setCriteria(/.+ opened a WITHER door!/), () => Settings.bloodRushSplits)
 
 registerWhen(register("chat", () => {
-    if (config.showOnEveryClass && getClass() != "Archer" && getClass() != "Mage") return
+    if (Settings.showOnEveryClass && getClass() != "Archer" && getClass() != "Mage") return
     roomTimes.push(Date.now() - runStarted)
     const bloodRoute = DmapDungeon.dungeonMap.getRoomsTo(DmapDungeon.getRoomFromName("Entrance"), DmapDungeon.getRoomFromName("Blood"), false)
     bloodRoute.forEach(room => {
@@ -37,7 +37,7 @@ registerWhen(register("chat", () => {
     ChatLib.chat(message)
     inBr = false
     messageSent = true
-}).setCriteria("The BLOOD DOOR has been opened!"), () => config.bloodRushSplits && !messageSent)
+}).setCriteria("The BLOOD DOOR has been opened!"), () => Settings.bloodRushSplits && !messageSent)
 
 register("worldLoad", () => {
     runStarted = null

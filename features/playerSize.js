@@ -1,4 +1,4 @@
-import config from "../config"
+import Settings from "../config"
 import { prefix } from "../util/util"
 import { registerWhen } from "../../BloomCore/utils/Utils"
 

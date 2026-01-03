@@ -1,4 +1,4 @@
-import config from "../config"
+import Settings from "../configs"
 import { registerWhen } from "../../BloomCore/utils/Utils"
 import Dungeon from "../../BloomCore/dungeons/Dungeon"
 
@@ -10,14 +10,14 @@ let lastAnnounce270 = 0
 const ANNOUNCE_COOLDOWN_MS = 3 * 1000 // 3 seconds
 let Score = 0
 
-if (config.scoreMilestonesPaul)
+if (Settings.scoreMilestonesPaul)
 
 register("worldUnload", () => {
     announced270 = announced300 = false
 })
 
 registerWhen(register("tick", () => {
-    if (config.scoreMilestonesPaul) {
+    if (Settings.scoreMilestonesPaul) {
         Score = Dungeon.score + 10
     } else {
         Score = Dungeon.score
@@ -58,7 +58,7 @@ registerWhen(register("tick", () => {
         }
         // Companion.showTitle("§6§l【300分養老速刷隊】打完一起去釣魚！")
     }
-}), () => config.scoreMilestones)
+}), () => Settings.scoreMilestones)
 
 // registerWhen(register("tick", () => {
 //     if (!announced270 && Dungeon.score >= 270) {
@@ -71,4 +71,4 @@ registerWhen(register("tick", () => {
 //         client.showTitle("§6§l【300分養老速刷隊】打完一起去釣魚！", 10, 40, 10)
 //         announced300 = true
 //     }
-// }), () => config.scoreMilestones)
+// }), () => Settings.scoreMilestones)

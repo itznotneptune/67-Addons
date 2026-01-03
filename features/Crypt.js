@@ -1,10 +1,10 @@
 import Dungeon from "../../BloomCore/dungeons/Dungeon";
-import config from "../config";
+import Settings from "../configs";
 
 let sent = false;
 
 register("step", () => {
-    if (config.Crypt) return;
+    if (Settings.Crypt) return;
     if (!Dungeon.inDungeon) return;
     if (sent) return;
 

@@ -1,4 +1,5 @@
 import { getScoreboard, removeUnicode } from "../../BloomCore/utils/Utils"
+import PogObject from "../../PogData";
 // import Font from '../../../modules/FontLib'
 
 export const prefix = "&b[&f67&b]"
@@ -77,4 +78,3 @@ export const registerWhen = (trigger, dependency) => {
     registered: false,
   });
 };
-

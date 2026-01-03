@@ -1,4 +1,4 @@
-import config from "../config"
+import Settings from "../configs"
 import ticks from "../util/ticks"
 
 let sentmsg = false
@@ -12,7 +12,7 @@ let delaybetweenscanandstart = 0
 let playerCoreTimes = {}
 
 const tickListener = () => {
-    if (p3done && config.coremsg) {
+    if (p3done && Settings.coremsg) {
         if (accountfortpsdifference) {
             accountfortpsdifference = false
             delaybetweenscanandstart = parseFloat((((Date.now() - timesincep3done) / 1000).toFixed(3)) + 0.001)
@@ -48,7 +48,7 @@ register("chat", () => {
 }).setCriteria("The Core entrance is opening!");
 
 function sendLastPlayerCoreMessage() {
-    if (config.coremsg && !sentmsg) {
+    if (Settings.coremsg && !sentmsg) {
         // Send all players’ core times
         Object.entries(playerCoreTimes).forEach(([name, time]) => {
             ChatLib.chat(`§b[&f67&b] §f${name} has entered core in §b${time}s`)

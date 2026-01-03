@@ -1,4 +1,4 @@
-import config from "../config"
+import Settings from "../configs"
 import { registerWhen, MouseEvent, getObjectXYZ } from "../../BloomCore/utils/Utils"
 import { renderFilledBox } from "../../BloomCore/RenderUtils"
 import { prefix } from "../util/util"
@@ -15,12 +15,12 @@ let relicCoords = {
 registerWhen(register("chat", (name, relicPicked) => {
     if (name != Player.getName()) return
     relic = relicPicked
-}).setCriteria(/(\w+) picked the Corrupted (\w+) Relic!/), () => config.highlightCauldron || config.blockRelicClicks)
+}).setCriteria(/(\w+) picked the Corrupted (\w+) Relic!/), () => Settings.highlightCauldron || Settings.blockRelicClicks)
 
 registerWhen(register("renderWorld", () => {
     if (!relic) return
     drawHighlight(relic)
-}), () => relic && config.highlightCauldron)
+}), () => relic && Settings.highlightCauldron)
 
 registerWhen(register(MouseEvent, (event) => {
     const btn = event.button
@@ -43,7 +43,7 @@ registerWhen(register(MouseEvent, (event) => {
         cancel(event)
     }
     
-}), () => relic && config.blockRelicClicks)
+}), () => relic && Settings.blockRelicClicks)
 
 // returns T or F
 function checkCauldron(relic, x, y, z) {
@@ -58,7 +58,7 @@ function drawHighlight(relic) {
     let r = relicCoords[relic][3] / 255
     let g = relicCoords[relic][4] / 255
     let b = relicCoords[relic][5] / 255
-    renderFilledBox(x, y, z, 1.005, 1.01, r, g, b, 1, config.cauldronPhase)
+    renderFilledBox(x, y, z, 1.005, 1.01, r, g, b, 1, Settings.cauldronPhase)
 }
 
 register("worldLoad", () => {

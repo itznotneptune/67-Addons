@@ -2,7 +2,7 @@
 
 // --------------------------------- Imports --------------------------------- \\
 
-import config from "../config.js"
+import Settings from "../configs.js"
 
 // --------------------------------- Stuff ---------------------------------- \\
 
@@ -36,7 +36,7 @@ const animalsRegex = new RegExp(Object.keys(animalsMap).join("|"), "i");
 // --------------------------------- Mob Detection ---------------------------------- \\
 
 register("packetReceived", (event) => {
-    if(config.m4MobsDisplay) {return}
+    if(Settings.m4MobsDisplay) {return}
     deadBats = 0;
     deadCows = 0;
     deadChickens = 0;
@@ -82,7 +82,7 @@ register("packetReceived", (event) => {
 // --------------------------------- Overlay Renderer ---------------------------------- \\
 
 register("renderOverlay", () => {
-    if (config.m4MobsDisplay) {return}
+    if (Settings.m4MobsDisplay) {return}
     if (total === 0) {return}
     // let x = Renderer.screen.getWidth() / 2 / text_scale - 50;
     let x = 225;
