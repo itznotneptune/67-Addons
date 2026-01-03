@@ -6,7 +6,7 @@
 		announce_slayer = true
 		player_size = true
 		auto_equip_mask = false
-		rag_axe_message = false
+		rag_axe_message = true
 
 	[general.auto_refill]
 		auto_refill_pearls_threshold = 8
@@ -27,9 +27,9 @@
 		only_hide_in_boss = false
 		hide_player_after_leap = false
 		auto_swap_reaper = true
-		explo_shot_message = false
+		explo_shot_message = true
 		score_milestones = false
-		rapid_fire_message = false
+		rapid_fire_message = true
 		core_timestamps = false
 		announce_leap = true
 		leap_announce = true
@@ -42,7 +42,7 @@
 
 	[dungeons.f7]
 		crystal_message = false
-		crystal_alert = false
+		crystal_alert = true
 
 	[dungeons.p5]
 		dragon_debuff_message = false

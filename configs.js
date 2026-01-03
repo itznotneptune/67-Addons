@@ -328,6 +328,10 @@ class Settings {
   constructor() {
     this.initialize(this);
     this.setCategoryDescription("General", "&aMod Created by &l@itznotneptune")
+    this.addDependency("Show On Every Class", "Blood Rush Splits")
+    this.addDependency("Crystal Message", "Crystal Alert")
+    this.addDependency("Only Hide In Boss", "Hide Player After Leap")
+    this.addDependency("Force Paul", "Score Milestones")
     // this.addDependency("Bat Render", "M4 Mob Render")
     // this.addDependency("Chicken Render", "M4 Mob Render")
     // this.addDependency("Rabbit Render", "M4 Mob Render")
