@@ -1,0 +1,138 @@
+
+[general]
+	rat = true
+
+	[general.general]
+		announce_slayer = true
+		player_size = true
+		auto_equip_mask = false
+		rag_axe_message = true
+
+	[general.auto_refill]
+		auto_refill_pearls_threshold = 8
+		auto_refill_superboomtnt_threshold = 32
+		auto_refill_jerries = false
+		auto_refill_jerries_threshold = 32
+		auto_refill_superboomtnt = false
+		auto_refill_pearls = false
+
+	[general.category]
+		auto_mask = false
+
+[dungeons]
+	show_on_every_class = false
+	blood_rush_split = true
+
+	[dungeons.general]
+		only_hide_in_boss = true
+		hide_player_after_leap = true
+		auto_swap_reaper = true
+		explo_shot_message = true
+		score_milestones = true
+		rapid_fire_message = true
+		core_timestamps = true
+		announce_leap = true
+		leap_announce = true
+		reaper_armor_slots = 0
+		show_on_every_class = false
+		blood_rush_splits = false
+		force_paul = true
+		leap_message = true
+		announce_crypts = true
+
+	[dungeons.f7]
+		crystal_message = false
+		crystal_alert = true
+
+	[dungeons.p5]
+		dragon_debuff_message = false
+
+	[dungeons.crypt_reminder]
+		trigger_time = 15
+		crypt_reminder = true
+		announce_crypts = true
+
+	[dungeons.crypt]
+		announce_mimic_found = false
+		crypt_reminder_time = 80
+		enable_crypt_reminder = false
+		announce_crypt_reminder = false
+
+	[dungeons.blood_rush]
+		show_on_every_class = true
+		blood_rush_splits = true
+
+	[dungeons.relics]
+		relic_triggerbot = false
+		block_wrong_relic_clicks = true
+		show_highlight_through_blocks = true
+		highlight_correct_cauldron = true
+		send_relic = false
+
+["f/m_4"]
+
+	["f/m_4".general]
+		m4_mob_render = true
+		m4_mobs_display = true
+
+	["f/m_4".animals_render]
+		cow_render = true
+		sheep_render = true
+		wolf_render = true
+		chicken_render = true
+		rabbit_render = true
+		bat_render = true
+
+	["f/m_4".genereal]
+		m4_mobs_display = true
+
+	["f/m_4".render]
+		render_animals = true
+		render_waypoints = true
+		render_rail = true
+
+[commands]
+
+	[commands.commands]
+		party_chat_dungeon_queue_command = true
+
+[dungeon]
+
+	[dungeon.general]
+		core_timestamps = true
+
+	[dungeon.relics]
+		relic_spawn_timer = false
+		relic_spawn_timer_amount = "42"
+		show_every_relic = false
+		show_relic_pick_up_time = false
+		relic_timer = false
+
+[auto_welcome_back]
+
+	[auto_welcome_back.guild]
+		auto_welcome_back_guild_members = false
+		welcome_back_message = "Welcome Back {name}! o/"
+		toggle = false
+		auto_welcome_back_guild_members_message = "Welcome back ${player} o/"
+
+	[auto_welcome_back.friends]
+		auto_welcome_back_friends = false
+		welcome_back_message = "Welcome Back {name}! o/"
+		toggle = false
+
+[friends]
+
+	[friends.general]
+		welcome_back_message = "Welcome Back ${player}! o/"
+		toggle = false
+
+["f7/m7"]
+
+	["f7/m7".relics]
+		relic_spawn_timer = false
+		relic_spawn_timer_amount = "42"
+		show_every_relic = false
+		show_relic_pick_up_time = false
+		relic_timer = false
+

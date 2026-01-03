@@ -1,0 +1,1 @@
+2026-01-03T13:44:46.543Z - player fallback outer error: InternalError: Java class "net.minecraft.client.Minecraft" has no public instance field or method named "getMinecraft". (file:/D:/sb/config/ChatTriggers/modules/67-Addons/features/leapMsg.js#50)

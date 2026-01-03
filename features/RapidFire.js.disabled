@@ -1,0 +1,4 @@
+import config from "../config"
+register("chat", () => {
+    if (config.rapid) ChatLib.command("pc Used Rapid Fire!");
+}).setCriteria("Used Rapid Fire!")
