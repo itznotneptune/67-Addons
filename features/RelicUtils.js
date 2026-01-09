@@ -1,4 +1,4 @@
-import Settings from "../configs"
+import Settings from "../config"
 import { registerWhen, MouseEvent, getObjectXYZ } from "../../BloomCore/utils/Utils"
 import { renderFilledBox } from "../../BloomCore/RenderUtils"
 import { prefix } from "../util/util"

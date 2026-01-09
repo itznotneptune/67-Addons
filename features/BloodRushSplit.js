@@ -1,4 +1,4 @@
-import Settings from "../configs"
+import Settings from "../config"
 import { prefix, getRoom, getRoomID, getClass } from "../util/util"
 import { registerWhen } from "../../BloomCore/utils/Utils"
 import DmapDungeon from "../components/DmapDungeon"
@@ -17,12 +17,12 @@ registerWhen(register("chat", () => {
 }).setCriteria("[NPC] Mort: Here, I found this map when I first entered the dungeon."), () => Settings.bloodRushSplits)
 
 registerWhen(register("chat", () => {
-    if (Settings.showOnEveryClass && getClass() != "Archer" && getClass() != "Mage") return
+    if (!Settings.showOnEveryClass && getClass() != "Archer" && getClass() != "Mage") return
     roomTimes.push(Date.now() - runStarted)
 }).setCriteria(/.+ opened a WITHER door!/), () => Settings.bloodRushSplits)
 
 registerWhen(register("chat", () => {
-    if (Settings.showOnEveryClass && getClass() != "Archer" && getClass() != "Mage") return
+    if (!Settings.showOnEveryClass && getClass() != "Archer" && getClass() != "Mage") return
     roomTimes.push(Date.now() - runStarted)
     const bloodRoute = DmapDungeon.dungeonMap.getRoomsTo(DmapDungeon.getRoomFromName("Entrance"), DmapDungeon.getRoomFromName("Blood"), false)
     bloodRoute.forEach(room => {

@@ -36,13 +36,24 @@
 		reaper_armor_slots = 0
 		show_on_every_class = false
 		blood_rush_splits = false
-		force_paul = false
+		force_paul = true
 		leap_message = true
 		announce_crypts = true
 
 	[dungeons.f7]
 		crystal_message = false
 		crystal_alert = true
+
+	[dungeons.leap_counter]
+		ee4_leap_counter = true
+		leap_counter = true
+		crystal_leap_counter = false
+		ssc_leap_counter = false
+		ee3_leap_counter = false
+		ee2_leap_counter = false
+		purple_leap_counter = false
+		ss_leap_counter = false
+		p5_leap_counter = false
 
 	[dungeons.p5]
 		dragon_debuff_message = false

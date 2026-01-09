@@ -11,7 +11,7 @@ let text = new Text('').setScale(2).setShadow(true).setAlign('CENTER').setColor(
 // --------------------------------- Death Tick Detection --------------------------------- \\
 
 register("chat", () => {
-    if (Settings.deathTickTimer) return
-    deathTickDuration = 20 // 20 ticks = 1 second
+    if (!Settings.deathTickTimer) return
+    deathTickDuration = 40 // 20 ticks = 1 second
     
 }).setCriteria(/^(\S+) is no long ready!$/)

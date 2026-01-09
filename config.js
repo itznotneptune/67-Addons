@@ -224,6 +224,78 @@ class Settings {
   })
   Relic = false
 
+  @SwitchProperty({
+    name: "Leap Counter",
+    description: "Counts how many people have leaped to you in the boss phase",
+    category: "Dungeons",
+    subcategory: "Leap Counter"
+  })
+  leapCounter = false
+
+  @SwitchProperty({
+    name: "Crystal Leap Counter",
+    description: "(For arch) Mage -> Arch leap counter",
+    category: "Dungeons",
+    subcategory: "Leap Counter"
+  })
+  crystalLeapCounter = false
+  
+  @SwitchProperty({
+    name: "Purple Leap Counter",
+    description: "(For healer) Mage -> Healer leap counter",
+    category: "Dungeons",
+    subcategory: "Leap Counter"
+  })
+  purpleLeapCounter = false
+
+  @SwitchProperty({
+    name: "SSC Leap Counter",
+    description: "(For bers) Healer -> Bers leap counter",
+    category: "Dungeons",
+    subcategory: "Leap Counter"
+  })
+  sscLeapCounter = false
+
+  @SwitchProperty({
+    name: "SS Leap Counter",
+    description: "(For healer) All -> Healer leap counter",
+    category: "Dungeons",
+    subcategory: "Leap Counter"
+  })
+  ssLeapCounter = false
+
+  @SwitchProperty({
+    name: "EE2 Leap Counter",
+    description: "(For arch) EE2 leap counter",
+    category: "Dungeons",
+    subcategory: "Leap Counter"
+  })
+  ee2LeapCounter = false
+
+  @SwitchProperty({
+    name: "EE3 Leap Counter",
+    description: "(For healer) EE3 leap counter",
+    category: "Dungeons",
+    subcategory: "Leap Counter"
+  })
+  ee3LeapCounter = false
+
+  @SwitchProperty({
+    name: "EE4 Leap Counter",
+    description: "(For mage) EE4 leap counter",
+    category: "Dungeons",
+    subcategory: "Leap Counter"
+  })
+  ee4LeapCounter = false
+
+  @SwitchProperty({
+    name: "P5 Leap Counter",
+    description: "(For healer)P5 leap counter",
+    category: "Dungeons",
+    subcategory: "Leap Counter"
+  })
+  p5LeapCounter = false
+
 //  ////////////////////////////||\\\\\\\\\\\\\\\\\\\\\\\\\\\\  \\
 //                           Commands                           \\
 //  \\\\\\\\\\\\\\\\\\\\\\\\\\\\||////////////////////////////  \\
@@ -339,11 +411,19 @@ class Settings {
 
   constructor() {
     this.initialize(this);
-    this.setCategoryDescription("General", "&aMod Created by &l@itznotneptune")
+    this.setCategoryDescription("General", "&aMod Created by &l@itznotneptune ordered by owo67")
     this.addDependency("Show On Every Class", "Blood Rush Splits")
     this.addDependency("Crystal Message", "Crystal Alert")
     this.addDependency("Only Hide In Boss", "Hide Player After Leap")
     this.addDependency("Force Paul", "Score Milestones")
+    this.addDependency("Crystal Leap Counter", "Leap Counter")
+    this.addDependency("Purple Leap Counter", "Leap Counter")
+    this.addDependency("SSC Leap Counter", "Leap Counter")
+    this.addDependency("SS Leap Counter", "Leap Counter")
+    this.addDependency("EE2 Leap Counter", "Leap Counter")
+    this.addDependency("EE3 Leap Counter", "Leap Counter")
+    this.addDependency("EE4 Leap Counter", "Leap Counter")
+    this.addDependency("P5 Leap Counter", "Leap Counter")
     // this.addDependency("Bat Render", "M4 Mob Render")
     // this.addDependency("Chicken Render", "M4 Mob Render")
     // this.addDependency("Rabbit Render", "M4 Mob Render")

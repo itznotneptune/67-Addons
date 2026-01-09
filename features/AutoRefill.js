@@ -1,8 +1,8 @@
-import Settings from "../configs"
+import Settings from "../config"
 import { prefix } from "../util/util"
 
 register("step", () => {
-    if (Settings.autoRefillPearls) return
+    if (!Settings.autoRefillPearls) return
     const pearlStack = Player.getInventory()?.getItems()?.find(a => a?.getName() == "§fEnder Pearl")
 
         if (pearlStack) {
@@ -16,7 +16,7 @@ register("step", () => {
 }).setDelay(4)
 
 register("step", () => {
-    if (Settings.autoRefillJerries) return
+    if (!Settings.autoRefillJerries) return
     const jerryStack = Player.getInventory()?.getItems()?.find(a => a?.getName() == "§fInflatable Jerry")
 
         if (jerryStack) {
@@ -32,7 +32,7 @@ register("step", () => {
 }).setDelay(4)
 
 register("step", () => {
-    if (Settings.autoRefillSuperBoom) return
+    if (!Settings.autoRefillSuperBoom) return
     const jerryStack = Player.getInventory()?.getItems()?.find(a => a?.getName() == "§fSuperBoom TNT")
 
         if (jerryStack) {

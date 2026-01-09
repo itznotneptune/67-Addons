@@ -1,4 +1,4 @@
-import Settings from "../configs"
+import Settings from "../config"
 
 register("chat", () => {
     if (Settings.dungeonCmd) setTimeout(() => {

@@ -22,7 +22,7 @@ register("chat", () => {
 }).setCriteria("[BOSS] Maxor: WELL! WELL! WELL! LOOK WHO'S HERE!")
 
 registerWhen(register("chat", () => {
-    if (Settings.onlyHideInBoss) {
+    if (!Settings.onlyHideInBoss) {
         if (inBoss) {
             hidePlayers()
             setTimeout(() => {

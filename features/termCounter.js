@@ -1,6 +1,6 @@
 // ------------------------------ Import ------------------------------ \\
 
-import Settings from "../configs.js"
+// import Settings from "../config.js"
 
 // ------------------------------ Variables ------------------------------ \\
 
@@ -15,11 +15,28 @@ register("chat", () => {
     ChatLib.chat("§a[67-Addons] §eS2 started!")
 }).setCriteria(s1EndMessage)
 
-register("chat", () => {
+register("chat", (event) => {
     if (s2) {
         if (term3 == false) {
             term3 = true
-            ChatLib.chat(`§a[67-Addons] §eS2 Term 3 done! (${term3Player})`)
+            let msg = null
+            if (event && event.getMessage) {
+                try { msg = event.getMessage().getUnformattedText() } catch (e) { try { msg = event.getMessage().toString() } catch (e) { msg = null } }
+            } else if (event && event.message) msg = event.message
+            else if (event && event.getString) {
+                try { msg = event.getString() } catch (e) { msg = null }
+            } else {
+                try { msg = ChatLib.getChatMessage().getUnformattedText() } catch (e) { try { msg = String(ChatLib.getChatMessage()) } catch (e) { msg = null } }
+            }
+            if (typeof msg !== 'string') {
+                try { msg = String(msg) } catch (e) { msg = null }
+            }
+            if (!msg) return
+            let m = msg.match(/^(\S+)\s+activated a terminal! \(3\//)
+            if (!m) return
+            let name = m[1]
+
+            ChatLib.chat(`§a[67-Addons] §eS2 Term 3 done! (${name})`)
         }
     }
 }).setCriteria(/^(\S+) activated a terminal! \(3/).setStart()

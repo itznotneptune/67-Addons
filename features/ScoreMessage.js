@@ -1,4 +1,4 @@
-import Settings from "../configs"
+import Settings from "../config"
 import { registerWhen } from "../../BloomCore/utils/Utils"
 import Dungeon from "../../BloomCore/dungeons/Dungeon"
 
@@ -10,7 +10,7 @@ let lastAnnounce270 = 0
 const ANNOUNCE_COOLDOWN_MS = 3 * 1000 // 3 seconds
 let Score = 0
 
-if (Settings.scoreMilestonesPaul)
+if (!Settings.scoreMilestonesPaul)
 
 register("worldUnload", () => {
     announced270 = announced300 = false

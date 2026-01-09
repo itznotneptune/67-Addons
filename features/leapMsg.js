@@ -1,4 +1,4 @@
-import Settings from "../configs"
+import Settings from "../config"
 
 let LEAP_DEBUG = false
 const D_PREFIX = "§6[leapDbg] §r"
@@ -147,7 +147,7 @@ register("chat", (event) => {
 // Also detect the teleport confirmation line: "You have teleported to NAME!" and trigger the leap flow
 register("chat", (event) => {
   if (LEAP_DEBUG) ChatLib.chat(D_PREFIX + "Settings.leapMsg: " + !Settings.leapMsg)
-  if (Settings.leapMsg) return
+  if (!Settings.leapMsg) return
   try {
     let raw = extractTextFromEvent(event)
     if (!raw) return
@@ -217,7 +217,7 @@ function resolveClass(name) {
 
 register("chat", (name) => {
   if (LEAP_DEBUG) ChatLib.chat(D_PREFIX + "Settings.leapMsg: " + !Settings.leapMsg)
-  if (Settings.leapMsg) return
+  if (!Settings.leapMsg) return
 
   const clean = ChatLib.removeFormatting(name)
 

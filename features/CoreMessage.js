@@ -1,4 +1,4 @@
-import Settings from "../configs"
+import Settings from "../config"
 import ticks from "../util/ticks"
 
 let sentmsg = false
@@ -48,7 +48,7 @@ register("chat", () => {
 }).setCriteria("The Core entrance is opening!");
 
 function sendLastPlayerCoreMessage() {
-    if (Settings.coremsg && !sentmsg) {
+    if (!Settings.coremsg && !sentmsg) {
         // Send all players’ core times
         Object.entries(playerCoreTimes).forEach(([name, time]) => {
             ChatLib.chat(`§b[&f67&b] §f${name} has entered core in §b${time}s`)
