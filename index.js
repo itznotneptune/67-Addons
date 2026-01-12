@@ -24,6 +24,9 @@ import "./features/bloodDone"
 import "./watcher/settings"
 import "./watcher/index"
 import "./features/leapCounter"
+import "./features/deathTickTimer"
+import "./features/67"
+import "./features/rng"
 
 // restore simple command for opening GUI
 register("command", (...args) => {

@@ -4,6 +4,7 @@
 
 	[general.general]
 		announce_slayer = true
+		rng_sound = true
 		player_size = true
 		auto_equip_mask = false
 		rag_axe_message = true
@@ -38,6 +39,7 @@
 		blood_rush_splits = false
 		force_paul = true
 		leap_message = true
+		tick_timer = false
 		announce_crypts = true
 
 	[dungeons.f7]

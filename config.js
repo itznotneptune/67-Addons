@@ -83,6 +83,14 @@ class Settings {
   })
   automask = false
 
+  @SwitchProperty({
+    name: "RNG Sound",
+    description: "Plays a sound when you drop a rare item",
+    category: "General",
+    subcategory: "General"
+  })
+  rngSound = false
+
 //  ////////////////////////////||\\\\\\\\\\\\\\\\\\\\\\\\\\\\  \\
 //                           Dungeons                           \\
 //  \\\\\\\\\\\\\\\\\\\\\\\\\\\\||////////////////////////////  \\
@@ -223,6 +231,14 @@ class Settings {
     subcategory: "Relics"
   })
   Relic = false
+
+  @SwitchProperty({
+    name: "Tick Timer",
+    description: "Shows death tick timer",
+    category: "Dungeons",
+    subcategory: "General"
+  })
+  deathTickTimer = false
 
   @SwitchProperty({
     name: "Leap Counter",
