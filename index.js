@@ -2,8 +2,8 @@ import Settings from "./config";
 
 import "./features/BloodRushSplit"
 import "./features/QueueDungeonCommand"
-// import "./features/RapidFire"
-// import "./features/ExplosiveShot"
+import "./features/RapidFire"
+import "./features/ExplosiveShot"
 import "./features/RelicUtils"
 // import "./features/HideLeap"
 import "./features/Relic"
@@ -27,6 +27,9 @@ import "./features/leapCounter"
 import "./features/deathTickTimer"
 import "./features/67"
 import "./features/rng"
+// import "./features/dungeonChest/dungeonChest"
+// import "./features/dungeonChest/logger"
+// import "./features/dungeonChest/utils"
 
 // restore simple command for opening GUI
 register("command", (...args) => {
