@@ -36,6 +36,7 @@
 		leap_announce = true
 		reaper_armor_slots = 0
 		show_on_every_class = false
+		shitter_list = true
 		blood_rush_splits = false
 		force_paul = true
 		leap_message = true

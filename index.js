@@ -30,6 +30,7 @@ import "./features/rng"
 // import "./features/dungeonChest/dungeonChest"
 // import "./features/dungeonChest/logger"
 // import "./features/dungeonChest/utils"
+import "./features/shitterList"
 
 // restore simple command for opening GUI
 register("command", (...args) => {

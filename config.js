@@ -241,6 +241,14 @@ class Settings {
   deathTickTimer = false
 
   @SwitchProperty({
+    name: "Shitter List",
+    description: "/shitter for help",
+    category: "Dungeons",
+    subcategory: "General"
+  })
+  shitterList = false
+
+  @SwitchProperty({
     name: "Leap Counter",
     description: "Counts how many people have leaped to you in the boss phase",
     category: "Dungeons",
