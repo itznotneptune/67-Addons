@@ -1,26 +1,20 @@
 import Settings from "../config"
 
-// Map storage: uuid -> { name, rank }
+// Map storage: uuid -> username
 const shitterMap = new Map()
 const DATA_PATH = "67-Addons/data/shitterList.json"
-let color = "§7"
 
 function saveShitterList() {
-    const arr = Array.from(shitterMap.entries()).map(([uuid, info]) => ({
-        uuid,
-        name: info.name,
-        rank: info.rank || null,
-        monthlyRankColor: info.monthlyRankColor || null,
-        monthlyPackageRank: info.monthlyPackageRank || null
-    }))
+    const arr = Array.from(shitterMap.entries()).map(([uuid, name]) => ({ uuid, name }))
     const json = JSON.stringify(arr, null, 2)
+    // Try FileLib first (ChatTriggers helper)
     try {
         if (typeof FileLib !== "undefined" && FileLib.write) {
-            FileLib.write(DATA_PATH, json)
-            return
+            try { FileLib.write(DATA_PATH, json) } catch (e) {}
         }
     } catch (e) {}
 
+    // Also write using Java IO as a fallback/duplicate so reload contexts can read it reliably
     try {
         const File = java.io.File
         const parent = new File("config/ChatTriggers/modules/67-Addons/data")
@@ -33,17 +27,43 @@ function saveShitterList() {
 }
 
 function loadShitterList() {
+    // Clear existing entries before loading
+    shitterMap.clear()
+
+    // Helper to parse and populate from various JSON shapes
+    function populateFromJsonContent(content) {
+        if (!content) return false
+        try {
+            const data = JSON.parse(content)
+            // Support array of {uuid,name}
+            if (Array.isArray(data)) {
+                data.forEach(obj => { if (obj && obj.uuid) shitterMap.set(obj.uuid, obj.name || "") })
+                return true
+            }
+            // Support object mapping uuid->name
+            if (typeof data === 'object') {
+                // detect mapping like { "uuid": "name", ... }
+                const keys = Object.keys(data)
+                if (keys.length && typeof data[keys[0]] === 'string') {
+                    keys.forEach(k => shitterMap.set(k, data[k]))
+                    return true
+                }
+            }
+        } catch (e) {}
+        return false
+    }
+
+    // Try FileLib first if available
     try {
         if (typeof FileLib !== "undefined" && FileLib.read) {
-            const content = FileLib.read(DATA_PATH)
-            if (content) {
-                const arr = JSON.parse(content)
-                arr.forEach(obj => shitterMap.set(obj.uuid, { name: obj.name, rank: obj.rank || null, monthlyRankColor: obj.monthlyRankColor || null, monthlyPackageRank: obj.monthlyPackageRank || null }))
-            }
-            return
+            try {
+                const content = FileLib.read(DATA_PATH)
+                if (populateFromJsonContent(content)) return
+            } catch (e) {}
         }
     } catch (e) {}
 
+    // Fallback to Java IO file path
     try {
         const f = new java.io.File("config/ChatTriggers/modules/67-Addons/data/shitterList.json")
         if (!f.exists()) return
@@ -51,44 +71,58 @@ function loadShitterList() {
         let line, sb = ""
         while ((line = br.readLine()) != null) sb += line + "\n"
         br.close()
-        const arr = JSON.parse(sb)
-        arr.forEach(obj => shitterMap.set(obj.uuid, { name: obj.name, rank: obj.rank || null, monthlyRankColor: obj.monthlyRankColor || null, monthlyPackageRank: obj.monthlyPackageRank || null }))
+        populateFromJsonContent(sb)
     } catch (e) {}
 }
 
 loadShitterList()
 
-// read Hypixel key from absolute path if exists
-function readHypixelKey() {
+// map of uuid -> chat listener handle
+const chatListeners = new Map()
+
+function registerListener(uuid, name) {
     try {
-        // try FileLib first
-        if (typeof FileLib !== "undefined" && FileLib.read) {
-            if (FileLib.exists("", "hypixel_api.txt")) {
-                return FileLib.read("", "hypixel_api.txt").trim()
-            }
-        }
+        const handler = register("chat", (event) => {
+            try {
+                ChatLib.chat(`§6[67Addons] §cDetected shitter: §e${name} §8(${uuid})`)
+                new Sound({source: "shitter.ogg"}).setVolume(0.1)?.play();
+            } catch (e) {}
+        }).setCriteria(name).setContains()
+        chatListeners.set(uuid, handler)
     } catch (e) {}
-    try {
-        const p = new java.io.File("D:/sb/config/ChatTriggers/hypixel_api.txt")
-        if (!p.exists()) return null
-        const br = new java.io.BufferedReader(new java.io.FileReader(p))
-        const key = br.readLine()
-        br.close()
-        return key ? String(key).trim() : null
-    } catch (e) {}
-    return null
 }
 
-const HYPIXEL_KEY = readHypixelKey()
+function unregisterListener(uuid) {
+    try {
+        const h = chatListeners.get(uuid)
+        if (h && h.unregister) h.unregister()
+    } catch (e) {}
+    chatListeners.delete(uuid)
+}
+
+function refreshChatListeners() {
+    try {
+        // unregister existing
+        for (const [uuid, h] of chatListeners.entries()) {
+            try { if (h && h.unregister) h.unregister() } catch (e) {}
+        }
+        chatListeners.clear()
+        // register for current entries
+        for (const [uuid, name] of shitterMap.entries()) {
+            registerListener(uuid, name)
+        }
+    } catch (e) {}
+}
 
 // fetch player data from playerdb.co; accepts username or uuid
-function fetchPlayerUUID(id) {
+function fetchPlayer(id) {
     try {
         const urlStr = "https://playerdb.co/api/player/minecraft/" + encodeURIComponent(id)
         const url = new java.net.URL(urlStr)
         const conn = url.openConnection()
         conn.setConnectTimeout(5000)
         conn.setReadTimeout(5000)
+        // some environments require a UA
         conn.setRequestProperty && conn.setRequestProperty("User-Agent", "ChatTriggers")
         const is = conn.getInputStream()
         const reader = new java.io.BufferedReader(new java.io.InputStreamReader(is))
@@ -101,35 +135,6 @@ function fetchPlayerUUID(id) {
         }
     } catch (e) {}
     return null
-}
-
-// fetch Hypixel player data (returns object with rank + monthly fields)
-function fetchHypixelRank(uuid) {
-    if (!HYPIXEL_KEY) return { rank: null, monthlyRankColor: null, monthlyPackageRank: null }
-    try {
-        const urlStr = "https://api.hypixel.net/player?key=" + encodeURIComponent(HYPIXEL_KEY) + "&uuid=" + encodeURIComponent(uuid)
-        const url = new java.net.URL(urlStr)
-        const conn = url.openConnection()
-        conn.setConnectTimeout(5000)
-        conn.setReadTimeout(5000)
-        conn.setRequestProperty && conn.setRequestProperty("User-Agent", "ChatTriggers")
-        const is = conn.getInputStream()
-        const reader = new java.io.BufferedReader(new java.io.InputStreamReader(is))
-        let line, sb = ""
-        while ((line = reader.readLine()) != null) sb += line
-        reader.close()
-        const obj = JSON.parse(sb)
-        console.log("67-Addons: hypixel player response:", obj)
-        if (obj && obj.success && obj.player) {
-            const p = obj.player
-            const rank = p.newPackageRank || p.monthlyPackageRank || p.packageRank || p.rank || null
-            const monthlyRankColor = p.monthlyRankColor || null
-            const monthlyPackageRank = p.monthlyPackageRank || null
-            return { rank, monthlyRankColor, monthlyPackageRank }
-        }
-        console.log("67-Addons: hypixel response missing player for", uuid)
-    } catch (e) { console.log(e) }
-    return { rank: null, monthlyRankColor: null, monthlyPackageRank: null }
 }
 
 register("command", (sub, name) => {
@@ -147,36 +152,13 @@ register("command", (sub, name) => {
 
     if (action === "add") {
         if (!name) return ChatLib.chat("§6[67Addons] §cUsage: /shitter add <username>")
-        ChatLib.chat("§6[67Addons] §eResolving " + name + "...")
-        const res = fetchPlayerUUID(name)
-        if (!res) return ChatLib.chat("§6[67Addons] §cFailed to resolve " + name + ".")
-        const rankInfo = fetchHypixelRank(res.id)
-        const rr = rankInfo && rankInfo.rank ? rankInfo.rank : null
-        if (rr) {
-            if (rr == "VIP" || rr == "VIP_PLUS") {
-                color = "§a"
-            } else if (rr == "MVP" || rr == "MVP_PLUS") {
-                color = "§b"
-            } 
-            if (!rankInfo.monthlyPackageRank) return
-            if (rankInfo.monthlyPackageRank == "SUPERSTAR") {
-                if (rankInfo.monthlyRankColor === "GOLD") {
-                    color = "§6"
-                } else if (rankInfo.monthlyRankColor === "BLUE") {
-                    color = "§b"
-                }
-                else {
-                    color = "§6"
-                }
-            } else {
-                color = "§7"
-            }
-        }
-        shitterMap.set(res.id, { name: res.username, rank: rr, monthlyRankColor: rankInfo.monthlyRankColor || null, monthlyPackageRank: rankInfo.monthlyPackageRank || null })
+        ChatLib.chat(`§6[67Addons] §eResolving ${name}...`)
+        const res = fetchPlayer(name)
+        if (!res) return ChatLib.chat(`§6[67Addons] §cFailed to resolve ${name}.`)
+        shitterMap.set(res.id, res.username)
         saveShitterList()
-        let addMsg = "\u00A76[67Addons] \u00A7aAdded \u00A7e" + res.username + " (" + color + (rr || "") + "\u00A7r)"
-        addMsg += " to the shitter list."
-        ChatLib.chat(addMsg)
+        registerListener(res.id, res.username)
+        ChatLib.chat(`§6[67Addons] §aAdded §e${res.username} §ato the shitter list.`)
         return
     }
 
@@ -185,17 +167,18 @@ register("command", (sub, name) => {
         // try delete by uuid
         if (shitterMap.delete(name)) {
             saveShitterList()
-            ChatLib.chat("\u00A76[67Addons] \u00A7aRemoved \u00A7e" + name + " \u00A7afrom the shitter list.")
+            ChatLib.chat(`§6[67Addons] §aRemoved §e${name} §afrom the shitter list.`)
             return
         }
         // try delete by username (case-insensitive)
-        const found = Array.from(shitterMap.entries()).find(([uuid, info]) => info.name.toLowerCase() === name.toLowerCase())
+        const found = Array.from(shitterMap.entries()).find(([uuid, uname]) => uname.toLowerCase() === name.toLowerCase())
         if (found) {
             shitterMap.delete(found[0])
             saveShitterList()
-            ChatLib.chat("\u00A76[67Addons] \u00A7aRemoved \u00A7e" + found[1].name + " \u00A7afrom the shitter list.")
+            unregisterListener(found[0])
+            ChatLib.chat(`§6[67Addons] §aRemoved §e${found[1]} §afrom the shitter list.`)
         } else {
-            ChatLib.chat("\u00A76[67Addons] \u00A7c" + name + " was not in the shitter list.")
+            ChatLib.chat(`§6[67Addons] §c${name} was not in the shitter list.`)
         }
         return
     }
@@ -204,12 +187,7 @@ register("command", (sub, name) => {
         const arr = Array.from(shitterMap.entries())
         if (!arr.length) return ChatLib.chat("§6[67Addons] §eShitter list is empty.")
         ChatLib.chat("§6[67Addons] §eShitter list:")
-        arr.forEach(([uuid, info]) => {
-            let line = " \u00A77- \u00A7e" + info.name + " \u00A78(" + uuid + ")"
-            if (info.rank) line += " \u00A77- \u00A7e" + info.rank
-            if (info.monthlyPackageRank) line += " \u00A77( monthly: \u00A7e" + info.monthlyPackageRank + " )"
-            ChatLib.chat(line)
-        })
+        arr.forEach(([uuid, uname]) => ChatLib.chat(` §7- §e${uname} §8(${uuid})`))
         return
     }
 
@@ -217,45 +195,30 @@ register("command", (sub, name) => {
         if (!shitterMap.size) return ChatLib.chat("§6[67Addons] §eShitter list is empty.")
         ChatLib.chat("§6[67Addons] §eRefreshing names from playerdb... This may take a moment.")
         const updates = []
-        for (const [uuid, info] of Array.from(shitterMap.entries())) {
-            const res = fetchPlayerUUID(uuid)
+        for (const [uuid, oldName] of Array.from(shitterMap.entries())) {
+            const res = fetchPlayer(uuid)
             if (!res) continue
-            if (res.username !== info.name) {
-                shitterMap.set(uuid, { name: res.username, rank: info.rank || null, monthlyRankColor: info.monthlyRankColor || null, monthlyPackageRank: info.monthlyPackageRank || null })
-                updates.push({ uuid, from: info.name, to: res.username })
+            if (res.username !== oldName) {
+                shitterMap.set(uuid, res.username)
+                updates.push({ uuid, from: oldName, to: res.username })
+                // update listener for the new name
+                unregisterListener(uuid)
+                registerListener(uuid, res.username)
             }
         }
         if (updates.length) {
             saveShitterList()
-            updates.forEach(u => ChatLib.chat("\u00A76[67Addons] \u00A7aUpdated \u00A7e" + u.from + " \u00A7ato \u00A7e" + u.to + " \u00A78(" + u.uuid + ")"))
+            updates.forEach(u => ChatLib.chat(`§6[67Addons] §aUpdated §e${u.from} §ato §e${u.to} §8(${u.uuid})`))
         } else {
-            ChatLib.chat("\u00A76[67Addons] \u00A7aAll names are up-to-date.")
+            ChatLib.chat("§6[67Addons] §aAll names are up-to-date.")
         }
         return
     }
 
-    ChatLib.chat("\u00A76[67Addons] \u00A7cUnknown subcommand: " + action + ". Use /shitter help")
+    ChatLib.chat(`§6[67Addons] §cUnknown subcommand: ${action}. Use /shitter help`)
 }).setName("shitter")
-
-// Example chat scanner (optional) - match by username case-insensitive
-register("chat", (event) => {
-    if (!Settings.shitterList) return
-    let msg = ""
-    try {
-        msg = event && event.getMessage ? event.getMessage() : String(event || "")
-    } catch (e) {
-        msg = String(event || "")
-    }
-    if (!msg) return
-    for (const [uuid, info] of shitterMap.entries()) {
-        if (!info || !info.name) continue
-        if (msg.toLowerCase().includes(info.name.toLowerCase())) {
-            // DO SOMETHING when match found, e.g., notify
-            ChatLib.chat("\u00A76[67Addons] \u00A7cDetected shitter: \u00A7e" + info.name + " \u00A78(" + uuid + ")")
-            break
-        }
-    }
-})
+// refresh listeners on load
+refreshChatListeners()
 // import Settings from "../config"
 
 // const shitterList = new Set()

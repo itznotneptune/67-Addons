@@ -20,6 +20,12 @@
 	[general.category]
 		auto_mask = false
 
+[visuals]
+
+	[visuals.player_scale]
+		player_scale = true
+		"player_scale_%" = 55
+
 [dungeons]
 	show_on_every_class = false
 	blood_rush_split = true

@@ -2,7 +2,7 @@ import { @Vigilant, @SwitchProperty, @TextProperty, @CheckboxProperty, @ButtonPr
 
 @Vigilant("67-Addons", "§d§l67-Addons", {
   getCategoryComparator: () => (a, b) => {
-    const categories = ["General","Dungeons","Commands","Blood Room","F/M 4"]
+    const categories = ["General","Dungeons","Commands","Blood Room","F/M 4", "Visuals"]
     return categories.indexOf(a.name) - categories.indexOf(b.name);
   }
 })
@@ -433,6 +433,28 @@ class Settings {
 
 */
 
+//  ////////////////////////////||\\\\\\\\\\\\\\\\\\\\\\\\\\\\  \\
+//                            Visuals                           \\
+//  \\\\\\\\\\\\\\\\\\\\\\\\\\\\||////////////////////////////  \\
+
+  // @SwitchProperty({
+  //   name: "Player Scale",
+  //   description: "§fAllows to dynamically adjust the §4size of the §6player character's scale§f from the default 100% down to 30%.",
+  //   category: "Visuals",
+  //   subcategory: "Player Scale"
+  // })
+  // PlayerScale = false
+
+  // @SliderProperty({
+  //   name: "Player Scale %",
+  //   description: "",
+  //   category: "Visuals",
+  //   subcategory: "Player Scale",
+  //   min: 30,
+  //   max: 100
+  // })
+  // CustomPlayerScale = 100.0
+
   constructor() {
     this.initialize(this);
     this.setCategoryDescription("General", "&aMod Created by &l@itznotneptune ordered by owo67")
@@ -454,6 +476,7 @@ class Settings {
     // this.addDependency("Sheep Render", "M4 Mob Render")
     // this.addDependency("Wolf Render", "M4 Mob Render")
     // this.addDependency("Cow Render", "M4 Mob Render")
+    // this.addDependency("Player Scale %", "Player Scale")
   }
 }
 export default new Settings
